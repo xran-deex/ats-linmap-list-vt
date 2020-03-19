@@ -23,4 +23,4 @@ ATS_COMPILE (TEST_SRC
 	src/SATS/linmap_list.sats
 	src/DATS/linmap_list.dats
 	)
-ADD_LIBRARY (linmap_list ${TEST_SRC})
+ADD_LIBRARY (linmap_list SHARED ${TEST_SRC})
