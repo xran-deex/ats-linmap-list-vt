@@ -33,7 +33,7 @@
 
 (* ****** ****** *)
 
-#define ATS_PACKNAME "ATSLIB.libats.linmap_list"
+#define ATS_PACKNAME "linmap_list_vt"
 #define ATS_DYNLOADFLAG 0 // no need for dynloading at run-time
 
 (* ****** ****** *)
@@ -43,19 +43,17 @@ UN = "prelude/SATS/unsafe.sats"
 
 (* ****** ****** *)
 
-staload "./../SATS/linmap_list.sats"
+staload "./../SATS/linmap_list_vt.sats"
 
 (* ****** ****** *)
 
-#include "./SHARE/linmap.hats" // code reuse
-#include "./SHARE/linmap_node.hats" // code reuse
-#include "./../HATS/includes.hats"
-// #include "./../HATS/hashtbl.hats"
+#include "./SHARE/linmap_vt.hats" // code reuse
+#include "./SHARE/linmap_node_vt.hats" // code reuse
 
 (* ****** ****** *)
 
 stadef
-mytkind = $extkind"atslib_linmap_list"
+mytkind = $extkind"linmap_list_vt"
 
 (* ****** ****** *)
 

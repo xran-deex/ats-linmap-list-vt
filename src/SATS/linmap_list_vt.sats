@@ -33,12 +33,12 @@
 
 (* ****** ****** *)
 
-#define ATS_PACKNAME "ATSLIB.libats.linmap_list"
+#define ATS_PACKNAME "linmap_list_vt"
 
 (* ****** ****** *)
 
-#include "./SHARE/linmap.hats"
-#include "./SHARE/linmap_node.hats"
+#include "./SHARE/linmap_vt.hats"
+#include "./SHARE/linmap_node_vt.hats"
 
 (* ****** ****** *)
 

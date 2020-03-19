@@ -20,7 +20,7 @@ IF(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/node_modules)
 ENDIF()
 set(CMAKE_C_FLAGS "-DATS_MEMALLOC_LIBC -D_DEFAULT_SOURCE")
 ATS_COMPILE (TEST_SRC
-	src/SATS/linmap_list.sats
-	src/DATS/linmap_list.dats
+	src/SATS/linmap_list_vt.sats
+	src/DATS/linmap_list_vt.dats
 	)
-ADD_LIBRARY (linmap_list SHARED ${TEST_SRC})
+ADD_LIBRARY (linmap-list-vt SHARED ${TEST_SRC})
