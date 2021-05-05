@@ -1,40 +1,42 @@
 ATSCC=$(PATSHOME)/bin/patscc
 ATSOPT=$(PATSHOME)/bin/patsopt
 
-CFLAGS=-DATS_MEMALLOC_LIBC -D_DEFAULT_SOURCE -I . -I $(PATSHOME)/ccomp/runtime -I $(PATSHOME) -O3 -g
-LIBS=-L $(PATSHOME)/ccomp/atslib/lib -L ../target -lats-linmap-list-vt -latslib
+ATSFLAGS+=
 
-APP     = tests
-EXEDIR  = target
-SRCDIR  = .
-OBJDIR  = .build
-vpath %.dats .
-dir_guard=@mkdir -p $(@D)
-SRCS    := tests.dats
-OBJS    := $(patsubst %.dats,$(OBJDIR)/%.o,$(SRCS))
+CFLAGS+=-DATS_MEMALLOC_LIBC -D_DEFAULT_SOURCE -I $(PATSHOME)/ccomp/runtime -I $(PATSHOME) -O2 -I src -fno-stack-protector
+LDFLAGS+=-L $(PATSHOME)/ccomp/atslib/lib
+LIBS+=
 
-.PHONY: clean setup
+NAME := tests
+SRCDIR  := 
+vpath %.dats src
+vpath %.dats src/DATS
+vpath %.sats src/SATS
+SRCS    := $(shell find $(SRCDIR) -name '*.dats' -type f -exec basename {} \;)
+DDIR    :=  build
+OBJ    := $(patsubst %.dats,$(DDIR)/%.o,$(SRCS))
 
-all: $(EXEDIR)/$(APP)
+.PHONY: all clean fclean re 
 
-$(EXEDIR)/$(APP): $(OBJS)
-	$(dir_guard)
-	$(CC) $(CFLAGS) -o $(EXEDIR)/$(APP) $(OBJS) $(LIBS)
+all: $(NAME)
 
-.SECONDEXPANSION:
-$(OBJDIR)/%.o: %.c
-	$(dir_guard)
-	$(CC) $(CFLAGS) -c $< -o $(OBJDIR)/$(@F)
+$(NAME): $(OBJ)
+	$(CC) $(LDFLAGS) $^ $(LIBS) -o $@
 
-$(OBJDIR)/%.c: %.dats 
-	$(dir_guard)
-	$(ATSOPT) $(ATSFLAGS) -o $(OBJDIR)/$(@F) -d $<
+$(DDIR)/%.o: %.c | $(DDIR)
+	$(CC) $(CFLAGS) -o $@ -c $<
 
-RMF=rm -f
+%.c: %.dats
+	$(ATSOPT) $(ATSFLAGS) -o $(@F) -d $<
 
-clean: 
-	$(RMF) $(EXEDIR)/$(APP)
-	$(RMF) $(OBJS)
+$(SDIR) $(DDIR):
+	@mkdir $@
 
-run:
-	LD_LIBRARY_PATH=../target ./target/tests
+clean:
+	$(RM) -r $(SDIR) $(DDIR)
+
+fclean: clean
+	$(RM) $(NAME)
+
+re: fclean all
+
