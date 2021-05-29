@@ -1,7 +1,7 @@
 ATSCC=$(PATSHOME)/bin/patscc
 ATSOPT=$(PATSHOME)/bin/patsopt
 
-ATSFLAGS+=-IATS src
+ATSFLAGS+=
 
 CFLAGS+=-DATS_MEMALLOC_LIBC -D_DEFAULT_SOURCE -I $(PATSHOME)/ccomp/runtime -I $(PATSHOME) -O3 -I src
 LDFLAGS+=-L $(PATSHOME)/ccomp/atslib/lib

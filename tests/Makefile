@@ -3,8 +3,8 @@ ATSOPT=$(PATSHOME)/bin/patsopt
 
 ATSFLAGS+=
 
-CFLAGS+=-DATS_MEMALLOC_LIBC -D_DEFAULT_SOURCE -I $(PATSHOME)/ccomp/runtime -I $(PATSHOME) -O2 -I src -fno-stack-protector
-LDFLAGS+=-L $(PATSHOME)/ccomp/atslib/lib
+CFLAGS+=-DATS_MEMALLOC_LIBC -D_DEFAULT_SOURCE -I $(PATSHOME)/ccomp/runtime -I $(PATSHOME) -O2 -I src
+LDFLAGS+=
 LIBS+=
 
 NAME := tests
@@ -13,7 +13,7 @@ vpath %.dats src
 vpath %.dats src/DATS
 vpath %.sats src/SATS
 SRCS    := $(shell find $(SRCDIR) -name '*.dats' -type f -exec basename {} \;)
-DDIR    :=  build
+DDIR    := .build
 OBJ    := $(patsubst %.dats,$(DDIR)/%.o,$(SRCS))
 
 .PHONY: all clean fclean re 
